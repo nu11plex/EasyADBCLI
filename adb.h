@@ -14,17 +14,38 @@
 #include <cstdio>
 #include <string>
 #include <climits>
+
 #ifndef ADB_H
 #define ADB_H
-#ifdef __MINGW__ && __CYGWIN__
-#define exec adb.exe
+#ifdef __MINGW__
+const char* clear="cls"
+#elif __CYGWIN__
+const char* clear="cls";
+#elif __CYGWIN32__
+const char* clear="cls";
 #else
-#define exec adb
+const char *clear = "clear";
 #endif
+#define exec adb
 
-using namespace std;
-int connect(char *ip,char *port){
-    string a;
-}
+class adbAbstractLayer {
+public:
+    static int remoteConnect(const std::string &ip, const std::string &port) {
+        return 0;
+    }
+
+    static int localConnect() {
+        return 0;
+    }
+
+    static int localConnect(const std::string &device) {
+        return 0;
+    }
+
+    static int shell() {
+        return system("adb shell");
+    }
+} adb;
+
 #endif //ADB_H
 
